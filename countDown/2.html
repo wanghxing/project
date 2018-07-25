@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>js简单时分秒倒计时(二：设置时间戳，进行倒计时。比如距离活动结束时间等等)</title>
+
+</head>
+<body>
+	<div>
+		<span id="_d">00</span>
+		<span id="_h">00</span>
+		<span id="_m">00</span>
+		<span id="_s">00</span>
+	</div>
+
+<script type="text/javascript">
+	function checkTime(i){ //将0-9的数字前面加上0，例1变为01 
+	  if(i<10) 
+	  { 
+	    i = "0" + i; 
+	  } 
+	  return i; 
+	} 
+
+
+	function countTime() {
+		// 获取当前时间
+		var date = new Date();
+		var now = date.getTime();
+		// 设置截止时间
+		var str = "2019/5/24 00:00:00"; // 注意：时间是未来的时间，它只会前进不会倒流"2019/5/24 00:00:00"
+		var endDate = new Date(str);
+		var end = endDate.getTime();
+
+		// 时间差
+		var leftTime = end-now;
+		// 定义变量 d,h,m,s保存倒计时的时间
+		var d,h,m,s;
+		if(leftTime >= 0) {
+			d = Math.floor(leftTime/1000/60/60/24);
+			h = Math.floor(leftTime/1000/60/60%24);  
+			m = Math.floor(leftTime/1000/60%60);  
+			s = Math.floor(leftTime/1000%60); 
+		}
+		//将倒计时赋值到div中  
+		document.getElementById("_d").innerHTML = checkTime(d)+"天";  
+		document.getElementById("_h").innerHTML = checkTime(h)+"时";  
+		document.getElementById("_m").innerHTML = checkTime(m)+"分";  
+		document.getElementById("_s").innerHTML = checkTime(s)+"秒";  
+		//递归每秒调用countTime方法，显示动态时间效果  
+		setTimeout(countTime,1000);
+	}
+
+	window.onload = function(){
+		countTime();
+	}
+</script>
+</body>
+</html>

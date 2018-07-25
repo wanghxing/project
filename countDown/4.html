@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<style>
+.sideBar-time {
+  display: table;
+  width: 100%;
+  height: 84px;
+  text-align: center;
+  border-bottom: 1px solid #eef0f6;
+}
+
+.sideBar-time {
+  border-width: 1px 1px 1px 0;
+  border-style: solid;
+  border-color: transparent;
+}
+
+.sideBar-time .sideBar-time__inner {
+  vertical-align: middle;
+  display: table-cell;
+}
+
+.sideBar-time .lc-ico-clock {
+  display: block;
+  width: 28px;
+  height: 28px;
+  margin: 0 auto;
+  background: url(images/QA-icon-sound.png) no-repeat;
+}
+
+.sideBar-time .text {
+  margin: 16px 0 0 0;
+  font-weight: bold;
+  color: #222d44;
+}
+</style>
+</head>
+<body>
+<div class="sideBar-time">
+    <div class="sideBar-time__inner">
+        <i class="lc-ico-clock"></i>
+        <p class="text j-countDown">00:00</p>
+    </div>
+</div>
+
+<script src="js/jquery-1.11.0.min.js"></script>
+<script>
+	$(function(){
+		// 倒计时执行 (参数 1:选择器; 2:秒[数值型]; 3:回调)
+        countDown('.j-countDown',125,function(){
+            //console.log('')
+        });
+
+        // 倒计时 (m:s)
+        function countDown(o,s,callback) {
+            var $this = $(o);
+            var intDiff = typeof(s)  === 'number' ? s : 0;
+            var min = 0;
+            var sec = 0;
+            var interval = setInterval(function(){
+                if(intDiff >= 0) {
+                    min = Math.floor(intDiff / 60);
+                    sec = intDiff % 60;
+                    if (sec < 10) { sec = '0' + sec;}
+                    if (min < 10) { min = '0' + min;}
+                    $this.html(min + ':' + sec);
+                    intDiff--;
+                }else {
+                    clearInterval(interval);
+                    callback.call();
+                }
+            }, 1000);
+        }
+	})
+	
+</script>
+</body>
+</html>

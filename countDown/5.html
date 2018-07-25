@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>天时分秒</title>
+<style>
+.lc-living-container {
+	text-align:center;
+}
+.lc-living-container h1 {
+  font-size: 40px;
+  font-weight: 200 !important;
+  color: #333333;
+  padding: 20px 0;
+}
+.lc-living-container .time-item {
+  padding: 25px 0;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.lc-living-container .time-item .lc-time-number {
+  position: relative;
+  font-size: 50px;
+  padding: 40px 20px;
+  border: 2px solid #ddd;
+  background-color: rgba(160, 160, 160, 0.3) !important;
+  filter: Alpha(opacity=30);
+  background: #a0a0a0;
+  margin: 0 10px;
+}
+</style>	
+</head>
+<body>
+	<div class="lc-living-container">
+        <h1>距离直播开始还有</h1>
+        <div class="time-item">
+            <span id="day_show" class="lc-time-number" >00</span>天
+            <span id="hour_show" class="lc-time-number" >00</span>时
+            <span id="minute_show" class="lc-time-number" >00</span>分
+            <span id="second_show" class="lc-time-number" >00</span>秒
+        </div>
+    </div>
+<script src="js/jquery-1.11.0.min.js"></script>
+<script>
+	$(function(){
+		countDown(60000000);
+
+	})
+
+
+	//倒计时
+    function countDown(time){
+        var intD = parseInt(time/1000);
+        var day_show = $('#day_show'); // 天
+        var hour_show = $('#hour_show'); // 时
+        var minute_show = $('#minute_show'); // 分
+        var second_show = $('#second_show'); // 秒
+        window.setInterval(function(){
+            var day=0,
+                hour=0,
+                minute=0,
+                second=0;//时间默认值
+            if(intD > 0){
+                day = Math.floor(intD / (60 * 60 * 24));
+                hour = Math.floor(intD / (60 * 60)) - (day * 24);
+                minute = Math.floor(intD / 60) - (day * 24 * 60) - (hour * 60);
+                second = Math.floor(intD) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+            }
+            if (day <= 9) day = '0' + day;
+            if (hour <= 9) hour = '0' + hour;
+            if (minute <= 9) minute = '0' + minute;
+            if (second <= 9) second = '0' + second;
+            day_show.html(day);
+            hour_show.html('<s></s>'+hour);
+            minute_show.html('<s></s>'+minute);
+            second_show.html('<s></s>'+second);
+            intD--;
+        }, 1000);
+    }
+</script>
+</body>
+</html>
